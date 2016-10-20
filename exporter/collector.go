@@ -2,7 +2,7 @@ package exporter
 
 import (
     "github.com/aksentyev/hubble/exportertools"
-    "github.com/aksentyev/puncher/check"
+    "github.com/aksentyev/tcp_prober/check"
 )
 
 type Collector struct {

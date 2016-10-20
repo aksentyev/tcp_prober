@@ -6,14 +6,14 @@ import (
 )
 
 // Exporter collects Postgres metrics. It implements prometheus.Collector.
-type Puncher struct {
+type TcpProbesExporter struct {
     *exportertools.BaseExporter
     Config   *Config
 }
 
 // NewExporter returns a new PostgreSQL exporter for the provided DSN.
-func CreateAndRegister(config *Config) (*Puncher, error) {
-    exp := Puncher{
+func CreateAndRegister(config *Config) (*TcpProbesExporter, error) {
+    exp := TcpProbesExporter{
         Config: config,
         BaseExporter: exportertools.NewBaseExporter("tcp_availabity", config.CacheTTL, config.Labels),
     }
@@ -24,12 +24,12 @@ func CreateAndRegister(config *Config) (*Puncher, error) {
     return &exp, nil
 }
 
-func (e *Puncher) Setup() error {
+func (e *TcpProbesExporter) Setup() error {
     e.AddCollector(NewCollector(e.Config))
     return nil
 }
 
-func (e *Puncher) Close() (err error) {
+func (e *TcpProbesExporter) Close() (err error) {
     defer close(e.Control)
 
     err = exportertools.Unregister(e)
